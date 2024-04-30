@@ -7,15 +7,23 @@ on:
 # now we can write jobs 
 jobs: 
     # name of first job 
-    ashucode-check:
+    ashucode-check-build:
         runs-on: ubuntu-latest 
         steps: 
         - name: default action in github to check my repo if there is a change
           uses: actions/checkout@v4
           # fix action by git to check your repo for a change 
-        - name: i want to see code 
+        - name: i want to check few things 
           run: | 
             date 
             ls -a
             whoami 
             docker -v 
+            docker-compose version 
+        - name: now using compose to build and create 
+          run: | 
+            docker-compose down &>/dev/null
+            docker-compose up -d --build 
+            sleep 2
+            docker-compose ps 
+            

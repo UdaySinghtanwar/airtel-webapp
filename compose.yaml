@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  ashuapp1:
+    image: ashuweb:v1 
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ashuc1 
+    ports:
+      - 1244:80 
+    restart: always 
