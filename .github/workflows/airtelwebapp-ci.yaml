@@ -11,10 +11,11 @@ jobs:
         runs-on: ubuntu-latest 
         steps: 
         - name: default action in github to check my repo if there is a change
-          uses: actions/checkout@v3 
+          uses: actions/checkout@v4
           # fix action by git to check your repo for a change 
         - name: i want to see code 
           run: | 
             date 
             ls -a
             whoami 
+            docker -v 
