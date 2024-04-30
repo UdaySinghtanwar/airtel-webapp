@@ -26,11 +26,9 @@ jobs:
             docker-compose up -d --build 
             sleep 2
             docker-compose ps 
-    ashu-code-test:
-      runs-on: ubuntu-latest
-      steps: 
-      - name: trying to access container created in previous step 
-        run: |
-          curl -f http://localhost:1244/health.html 
-          echo "seems like my container is running"
+    
+        - name: trying to access container created in previous step 
+          run: |
+            curl -f http://localhost:1244/health.html 
+            echo "seems like my container is running"
             
