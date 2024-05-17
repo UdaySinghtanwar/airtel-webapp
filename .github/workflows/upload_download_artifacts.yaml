@@ -54,6 +54,9 @@ jobs:
       with:
         name: my-artifacts
         path: .
+    - name: Sets up Docker Buildx for building multi-platform images using 
+      uses: docker/setup-buildx-action@v2
+
     - name:  checking all downloaded files
       run: ls -a
     - name: Login to Docker Hub
@@ -62,11 +65,14 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }} 
 
+    - name: Sets up QEMU for emulating different CPU architectures using 
+      uses: docker/setup-qemu-action@v2
+
     - name: Build and push image to Docker Hub
       uses: docker/build-push-action@v5
       with: 
         context: .
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/ashuweb:version2bmoupload1
-    - name: docker creds logout 
-      run: docker logout 
+        tags: ${{ secrets.DOCKER_USERNAME }}/ashuweb:bmoplatformcpu
+    # - name: docker creds logout 
+    #   run: docker logout 
