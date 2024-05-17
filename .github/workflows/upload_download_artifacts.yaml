@@ -40,7 +40,7 @@ jobs:
         name: my-artifacts
         path: |
             . 
-            !**/.git
+            !**/.git*
             !**/.dockerignore
             !**/compose.yaml
             !**/*.md
@@ -67,6 +67,6 @@ jobs:
       with: 
         context: .
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/ashuweb:version2bmonew
+        tags: ${{ secrets.DOCKER_USERNAME }}/ashuweb:version2bmoupload1
     - name: docker creds logout 
       run: docker logout 
