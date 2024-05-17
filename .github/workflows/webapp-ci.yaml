@@ -1,7 +1,7 @@
 name: Docker Image CI
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "future" ]
 # what kind of jobs we want to run 
 jobs:
   build:
