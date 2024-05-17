@@ -3,7 +3,7 @@ name: ashu docker image pipeline
 # when to run this job 
 on: 
     push:
-        branches: ["master"]
+        branches: ["future1"]
 # now we can write jobs 
 jobs: 
     # name of first job 
@@ -30,11 +30,6 @@ jobs:
           run: |
             curl -f http://localhost:1244/health.html 
             echo "seems like my container is running"
-
-    ashu-build-pushdockerhub:
-        runs-on: ubuntu-latest
-        #needs: ashucode-check-build
-        steps:
         - name: image push to docker hub 
           uses: docker/login-action@v3
           with:
