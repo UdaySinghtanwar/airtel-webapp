@@ -38,8 +38,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: my-artifacts
-        path: |
-          .  # Specify files or directories to upload
+        path: . 
 
   ashu-build-pushdockerhub:
     runs-on: ubuntu-latest
@@ -50,9 +49,6 @@ jobs:
       with:
         name: my-artifacts
         path: .
-
-    
-
     - name: Login to Docker Hub
       uses: docker/login-action@v3
       with:
