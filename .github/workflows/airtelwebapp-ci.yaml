@@ -35,10 +35,10 @@ jobs:
         - name: image push to docker hub 
           uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
           with:
-            username: ${{secrets.DOCKER_USERNAME}}
-            password: ${{secrets.DOCKERHUB_TOKEN}} 
+            username: ${{ secrets.DOCKER_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_TOKEN }} 
         
-        - name: build and push image 
+        - name: build and push image to dockerhub
           uses: docker/build-push-action@v5
           with: 
             context: .
