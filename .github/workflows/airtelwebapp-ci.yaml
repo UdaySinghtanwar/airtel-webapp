@@ -1,4 +1,4 @@
-# name of pipeline 
+# name of pipeline workflow
 name: ashu docker image pipeline 
 # when to run this job 
 on: 
