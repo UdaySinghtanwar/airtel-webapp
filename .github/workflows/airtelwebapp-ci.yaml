@@ -26,12 +26,15 @@ jobs:
             docker-compose up -d --build 
             sleep 2
             docker-compose ps 
-    
         - name: trying to access container created in previous step 
           run: |
             curl -f http://localhost:1244/health.html 
             echo "seems like my container is running"
 
+    ashu-build-pushdockerhub:
+        runs-on: ubuntu-latest
+        #needs: ashucode-check-build
+        steps:
         - name: image push to docker hub 
           uses: docker/login-action@v3
           with:
@@ -44,3 +47,5 @@ jobs:
             context: .
             push: true
             tags: ${{ secrets.DOCKER_USERNAME }}/ashuweb:version2bmo
+        - name: docker logout performing
+          run: docker logout
