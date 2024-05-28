@@ -2,7 +2,7 @@ name: ashu docker image pipeline
 # when to run this job 
 on: 
     push:
-        branches: ["master"]
+        branches: ["master1"]
 # now we can write jobs 
 jobs: 
     # name of first job 
