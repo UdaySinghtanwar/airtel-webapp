@@ -1,12 +1,12 @@
 name: Docker Image CI
 on:
   push:
-    branches: [ "master1" ]
+    branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 jobs:
   build:
-    runs-on: windows-latest    # ${{matrix.os}}
+    runs-on: ubuntu-latest    # ${{matrix.os}}
     # strategy:
     #   matrix:
     #     os: [ubuntu-latest,windows-latest,macOS-latest]
@@ -20,3 +20,15 @@ jobs:
         echo $TAG
         docker version 
         aws --version 
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Analyze with SonarQube
+      uses: SonarSource/sonarqube-scan-action@7295e71c9583053f5bf40e9d4068a0c974603ec8
+      env:
+        SONAR_TOKEN: sqp_95646904b90bbc5173b02c97a42c34380f5f52e1
+        SONAR_HOST_URL: http://34.232.66.68:9000
+      with:
+        args:
+          -Dsonar.projectKey=ashu-project
+          -Dsonar.sources=.
+

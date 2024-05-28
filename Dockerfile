@@ -1,3 +1,3 @@
-FROM nginx:1.23
+FROM nginx
 LABEL name="ashutoshh"
 COPY . /usr/share/nginx/html/
