@@ -6,10 +6,10 @@ on:
     branches: [ "master" ]
 jobs:
   build:
-    runs-on: ${{matrix.os}}
-    strategy:
-      matrix:
-        os: [ubuntu-latest,windows-latest,macOS-latest]
+    runs-on: windows-latest    # ${{matrix.os}}
+    # strategy:
+    #   matrix:
+    #     os: [ubuntu-latest,windows-latest,macOS-latest]
     steps:
     - name: just single command 
       run: pwd 
@@ -18,3 +18,5 @@ jobs:
         date
         echo $GITHUB_REF
         echo $TAG
+        docker version 
+        aws --version 
