@@ -1,3 +1,3 @@
-FROM nginx:1.26.0-debian-12-r1
+FROM nginx:1.23
 LABEL name="ashutoshh"
 COPY . /usr/share/nginx/html/
