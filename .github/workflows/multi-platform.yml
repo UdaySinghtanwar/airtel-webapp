@@ -6,10 +6,10 @@ on:
     branches: [ "master" ]
 jobs:
   build:
-    runs-on: ubuntu-latest    # ${{matrix.os}}
-    # strategy:
-    #   matrix:
-    #     os: [ubuntu-latest,windows-latest,macOS-latest]
+    runs-on:  ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-latest,windows-latest,macOS-latest]
     steps:
     - name: just single command 
       run: pwd 
@@ -18,18 +18,8 @@ jobs:
         date
         echo $GITHUB_REF
         echo $TAG
-        docker version 
-        aws --version 
-        sudo apt install default-jre -y 
+        python -V
     - name: Checkout repository
       uses: actions/checkout@v4
-    - name: Analyze with SonarQube
-      uses: SonarSource/sonarqube-scan-action@7295e71c9583053f5bf40e9d4068a0c974603ec8
-      env:
-        SONAR_TOKEN: sqp_95646904b90bbc5173b02c97a42c34380f5f52e1
-        SONAR_HOST_URL: http://34.232.66.68:9000
-      with:
-        args:
-          -Dsonar.projectKey=ashu-project
-          -Dsonar.sources=.
+    
 
