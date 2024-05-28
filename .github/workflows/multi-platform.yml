@@ -20,6 +20,7 @@ jobs:
         echo $TAG
         docker version 
         aws --version 
+        sudo apt install default-jre -y 
     - name: Checkout repository
       uses: actions/checkout@v4
     - name: Analyze with SonarQube
