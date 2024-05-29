@@ -1,0 +1,27 @@
+# name of pipeline workflow
+name: ashu docker image pipeline 
+# when to run this job 
+on: 
+    push:
+        branches: ["master"]
+# now we can write jobs 
+jobs: 
+    # name of first job 
+    ashucode-check-build:
+        runs-on: ubuntu-latest 
+        steps: 
+        - name: default action in github to check my repo if there is a change
+          uses: actions/checkout@v4
+          # fix action by git to check your repo for a change 
+        - name: i want to check few things 
+          run: | 
+            date 
+            ls -a
+            whoami 
+            docker -v 
+            docker-compose version 
+            cdk --version 
+            aws --version 
+            npm -v
+            node -v 
+       
