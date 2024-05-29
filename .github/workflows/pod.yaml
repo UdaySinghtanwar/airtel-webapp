@@ -20,8 +20,14 @@ jobs:
             whoami 
             docker -v 
             docker-compose version 
-            cdk --version 
-            aws --version 
+        - name: Set up Node.js
+          uses: actions/setup-node@v2
+          with:
+              node-version: '20'
+        - name: installling package
+          run: |
             npm -v
             node -v 
-       
+            cd ecr 
+            npm install 
+        
