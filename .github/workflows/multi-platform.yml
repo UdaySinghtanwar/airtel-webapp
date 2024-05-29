@@ -19,6 +19,7 @@ jobs:
         echo $GITHUB_REF
         echo $TAG
         python -V
+        docker version 
     - name: Checkout repository
       uses: actions/checkout@v4
     
