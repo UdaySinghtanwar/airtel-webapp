@@ -1,0 +1,7 @@
+options:
+  logging: CLOUD_LOGGING_ONLY
+  logsBucket: 'gs://ashutoshh-logs-bucket'
+steps:
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['version']
+serviceAccount: 'ashu-new-project-445408@appspot.gserviceaccount.com'
