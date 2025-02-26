@@ -7,8 +7,8 @@ options:
 steps:
   # Step 1: Build a Docker image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/gcr.io/ashu-new-project-445408/ashu-imagenew', '.']
+    args: ['build', '-t', 'gcr.io/ashu-new-project-445408/ashu-imagenew', '.']
 
 # Step 2: Push the Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/gcr.io/ashu-new-project-445408/ashu-imagenew']
+    args: ['push', 'gcr.io/ashu-new-project-445408/ashu-imagenew']
