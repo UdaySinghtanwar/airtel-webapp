@@ -1,4 +1,6 @@
 
+# Service account to use for the build
+serviceAccount: 'ashu-poc-new@ashu-new-project-445408.iam.gserviceaccount.com'
 # Logging options
 options:
   logging: CLOUD_LOGGING_ONLY
