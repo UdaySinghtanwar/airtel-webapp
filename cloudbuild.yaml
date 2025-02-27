@@ -13,25 +13,26 @@ steps:
   - name: 'aquasec/trivy'
     args: ['image', '--severity', 'HIGH,CRITICAL', 'gcr.io/ashu-new-project-445408/ashu-imagenew']
     id: 'Run Trivy Scan'
-  # Step 3: Create a temporary container and test the /health.html endpoint
+   # Step 3: Create a Docker network
   - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - 'run'
-      - '--rm'
-      - '--name=temp-container'
-      - '-d'
-      - '-p'
-      - '8080:80'
-      - 'gcr.io/ashu-new-project-445408/ashu-imagenew'
+    args: ['network', 'create', 'temp-network']
+    id: 'Create Docker Network'
+
+  # Step 4: Start a temporary container in that network
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'run', '--rm', '--name', 'temp-container',
+      '--network', 'temp-network',
+      '-d', '-p', '8080:80',
+      'gcr.io/ashu-new-project-445408/ashu-imagenew'
+    ]
     id: 'Start Temporary Container'
 
-  - name: 'curlimages/curl'
-    args:
-      - '--retry'
-      - '5'
-      - '--retry-connrefused'
-      - '--fail'
-      - 'http://localhost:8080/health.html'
+  # Step 5: Check health endpoint from inside the container
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'exec', 'temp-container', 'curl', '-f', 'http://localhost/health.html'
+    ]
     id: 'Health Check'
 
   # Step 3: Push the Docker image to Artifact Registry
