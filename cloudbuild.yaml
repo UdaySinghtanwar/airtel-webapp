@@ -10,9 +10,8 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/ashu-new-project-445408/ashu-imagenew', '.']
 
-  # Step 2: Run Trivy for SAST
   - name: 'aquasec/trivy'
-    args: ['image', '--severity', 'HIGH,CRITICAL', 'gcr.io/ashu-new-project-445408/ashu-imagenew']
+    args: ['image', '--severity', 'HIGH,CRITICAL', '--exit-code', '1', 'gcr.io/ashu-new-project-445408/ashu-imagenew']
     id: 'Run Trivy Scan'
 
   # Step 3: Push the Docker image to Artifact Registry
