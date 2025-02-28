@@ -1,6 +1,3 @@
-# Service account to use for the build
-serviceAccount: 'ashu-poc-new@ashu-new-project-445408.iam.gserviceaccount.com'
-
 # Logging options
 options:
   logging: CLOUD_LOGGING_ONLY
@@ -8,10 +5,10 @@ options:
 steps:
   # Step 1: Build a Docker image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/ashu-new-project-445408/ashu-imagenew', '.']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/ashu-demo-project-451405/vodafone-common-server/ashu-imagenew:latest', '.']
 
   - name: 'aquasec/trivy'
-    args: ['image', '--severity', 'HIGH,CRITICAL', 'gcr.io/ashu-new-project-445408/ashu-imagenew']
+    args: ['image', '--severity', 'HIGH,CRITICAL', 'us-central1-docker.pkg.dev/ashu-demo-project-451405/vodafone-common-server/ashu-imagenew:latest']
     id: 'Run Trivy Scan'
    # Step 3: Create a Docker network
   - name: 'gcr.io/cloud-builders/docker'
@@ -24,7 +21,7 @@ steps:
       'run', '--rm', '--name', 'temp-container',
       '--network', 'temp-network',
       '-d', '-p', '8080:80',
-      'gcr.io/ashu-new-project-445408/ashu-imagenew'
+      'us-central1-docker.pkg.dev/ashu-demo-project-451405/vodafone-common-server/ashu-imagenew:latest'
     ]
     id: 'Start Temporary Container'
 
@@ -37,4 +34,4 @@ steps:
 
   # Step 3: Push the Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/ashu-new-project-445408/ashu-imagenew']
+    args: ['push', 'us-central1-docker.pkg.dev/ashu-demo-project-451405/vodafone-common-server/ashu-imagenew:latest']
