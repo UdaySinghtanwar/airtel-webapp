@@ -32,6 +32,19 @@ steps:
     ]
     id: 'Health Check'
 
-  # Step 3: Push the Docker image to Artifact Registry
+  # Step 6: Push the Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/ashu-demo-project-451405/vodafone-common-server/ashu-imagenew:latest']
+    
+# step 7: deploy using kubectl 
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'create'
+      - 'deployment'
+      - 'ashu-deployment' # Replace with your deployment name
+      - '--image'
+      - 'nginx' # Replace as needed
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a' # Replace with your cluster's zone
+      - 'CLOUDSDK_CONTAINER_CLUSTER=ashu-cluster' # Replace with your cluster's name
+    id: 'Deploy to Kubernetes'
