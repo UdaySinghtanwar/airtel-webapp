@@ -1,0 +1,50 @@
+# Logging options
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+steps:
+  # Step 1: Build a Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/ashu-demo-project-451405/vodafone-common-server/ashu-imagenew:latest', '.']
+
+  - name: 'aquasec/trivy'
+    args: ['image', '--severity', 'HIGH,CRITICAL', 'us-central1-docker.pkg.dev/ashu-demo-project-451405/vodafone-common-server/ashu-imagenew:latest']
+    id: 'Run Trivy Scan'
+   # Step 3: Create a Docker network
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['network', 'create', 'temp-network']
+    id: 'Create Docker Network'
+
+  # Step 4: Start a temporary container in that network
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'run', '--rm', '--name', 'temp-container',
+      '--network', 'temp-network',
+      '-d', '-p', '8080:80',
+      'us-central1-docker.pkg.dev/ashu-demo-project-451405/vodafone-common-server/ashu-imagenew:latest'
+    ]
+    id: 'Start Temporary Container'
+
+  # Step 5: Check health endpoint from inside the container
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'exec', 'temp-container', 'curl', '-f', 'http://localhost/health.html'
+    ]
+    id: 'Health Check'
+
+  # Step 6: Push the Docker image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/ashu-demo-project-451405/vodafone-common-server/ashu-imagenew:latest']
+    
+# step 7: deploy using kubectl 
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'create'
+      - 'deployment'
+      - 'ashu-deployment' # Replace with your deployment name
+      - '--image'
+      - 'nginx' # Replace as needed
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c' # Replace with your cluster's zone
+      - 'CLOUDSDK_CONTAINER_CLUSTER=my-first-cluster-1' # Replace with your cluster's name
+    id: 'Deploy to Kubernetes'

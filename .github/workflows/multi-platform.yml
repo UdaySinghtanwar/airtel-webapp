@@ -1,0 +1,26 @@
+name: Docker Image CI
+on:
+  push:
+    branches: [ "master1" ]
+  pull_request:
+    branches: [ "master1" ]
+jobs:
+  build:
+    runs-on:  ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-latest,windows-latest,macOS-latest]
+    steps:
+    - name: just single command 
+      run: pwd 
+    - name: we can run multiple commands ${{ matrix.os }}
+      run: |
+        date
+        echo $GITHUB_REF
+        echo $TAG
+        python -V
+        
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+

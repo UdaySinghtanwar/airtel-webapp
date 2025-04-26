@@ -1,20 +1,46 @@
-# name of pipeline 
+# name of pipeline workflow
 name: ashu docker image pipeline 
 # when to run this job 
 on: 
     push:
-        branches: ["master"]
+        branches: ["future1"]
 # now we can write jobs 
 jobs: 
     # name of first job 
-    ashucode-check:
+    ashucode-check-build:
         runs-on: ubuntu-latest 
         steps: 
         - name: default action in github to check my repo if there is a change
-          uses: actions/checkout@v3 
+          uses: actions/checkout@v4
           # fix action by git to check your repo for a change 
-        - name: i want to see code 
+        - name: i want to check few things 
           run: | 
             date 
             ls -a
             whoami 
+            docker -v 
+            docker-compose version 
+        - name: now using compose to build and create 
+          run: | 
+            docker-compose down &>/dev/null
+            docker-compose up -d --build 
+            sleep 2
+            docker-compose ps 
+        - name: trying to access container created in previous step 
+          run: |
+            curl -f http://localhost:1244/health.html 
+            echo "seems like my container is running"
+        - name: image push to docker hub 
+          uses: docker/login-action@v3
+          with:
+            username: ${{ secrets.DOCKER_USERNAME }}
+            password: ${{ secrets.DOCKER_PASSWORD }} 
+        
+        - name: build and push image to dockerhub
+          uses: docker/build-push-action@v5
+          with: 
+            context: .
+            push: true
+            tags: ${{ secrets.DOCKER_USERNAME }}/ashuweb:version2bmo
+        - name: docker logout performing
+          run: docker logout

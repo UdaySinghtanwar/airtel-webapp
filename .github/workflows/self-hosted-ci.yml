@@ -1,0 +1,15 @@
+name: ashu docker image pipeline 
+# when to run this job 
+on: 
+    push:
+        branches: ["master1"]
+# now we can write jobs 
+jobs: 
+    # name of first job 
+    ashucode-check-build:
+        runs-on: self-hosted
+        steps: 
+        - name: i want to check few things 
+          run: | 
+            date 
+            whoami
